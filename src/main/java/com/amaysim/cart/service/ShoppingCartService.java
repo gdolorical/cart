@@ -1,6 +1,9 @@
-package com.amaysim.service;
+package com.amaysim.cart.service;
 
-import com.amaysim.core.Product;
+import java.util.Map;
+
+import com.amaysim.cart.core.Product;
+import com.amaysim.cart.pricing.PricingStrategy;
 
 /**
  * Shopping Cart Service
@@ -15,14 +18,14 @@ public interface ShoppingCartService {
 	 * 
 	 * @return double Total Amount
 	 */
-	double getTotal();
+	double getTotal(Map<Product, Integer> itemsAdded, Map<String, PricingStrategy> pricingStrategies);
 	
 	/**
 	 * Displays the Expected Cart Items
 	 * 
 	 * @return String of Cart Items
 	 */
-	String getCartItems();
+	String getCartItems(Map<Product, Integer> itemsAdded, Map<String, PricingStrategy> pricingStrategies);
 	
 	
 	/**
@@ -32,4 +35,5 @@ public interface ShoppingCartService {
 	 * @return <code>Product</code>
 	 */
 	Product checkPromoCode(String promoCode);
+	
 }

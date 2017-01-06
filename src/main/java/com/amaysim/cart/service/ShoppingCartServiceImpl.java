@@ -1,12 +1,12 @@
-package com.amaysim.service;
+package com.amaysim.cart.service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.amaysim.core.Product;
-import com.amaysim.pricing.PricingStrategy;
-import com.amaysim.util.Constants;
-import com.amaysim.util.PromoCodes;
+import com.amaysim.cart.core.Product;
+import com.amaysim.cart.pricing.PricingStrategy;
+import com.amaysim.cart.util.Constants;
+import com.amaysim.cart.util.PromoCodes;
 
 /**
  * Shopping Cart Service Implementation
@@ -16,18 +16,17 @@ import com.amaysim.util.PromoCodes;
  */
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 	
-	private Map<Product, Integer> itemsAdded;
-	private Map<String, PricingStrategy> pricingStrategies;
+	private static final ShoppingCartServiceImpl instance = new ShoppingCartServiceImpl();
 	
+	protected ShoppingCartServiceImpl() {
+	}
 	
-	public ShoppingCartServiceImpl(Map<String, PricingStrategy> pricingStrategies, 
-									Map<Product, Integer> itemsAdded) {
-		this.pricingStrategies = pricingStrategies;
-		this.itemsAdded = itemsAdded;
+	public static ShoppingCartServiceImpl getInstance() {
+		return instance;
 	}
 
 	@Override
-	public double getTotal() {
+	public double getTotal(Map<Product, Integer> itemsAdded, Map<String, PricingStrategy> pricingStrategies) {
 		double total = 0.0;
 		Product promo = null;
 		PricingStrategy strategy;
@@ -96,7 +95,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public String getCartItems() {
+	public String getCartItems(Map<Product, Integer> itemsAdded, Map<String, PricingStrategy> pricingStrategies) {
 		
 		Map<Product, Integer> cartItems = removePromo(itemsAdded);
 		

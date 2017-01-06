@@ -1,4 +1,4 @@
-package com.amaysim.core;
+package com.amaysim.cart.core;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,15 +11,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.amaysim.exception.InvalidPromoCodeException;
-import com.amaysim.pricing.BundleFreePricingStrategy;
-import com.amaysim.pricing.BundlePricingStrategy;
-import com.amaysim.pricing.BuyXGetYPricingStrategy;
-import com.amaysim.pricing.NormalPricingStrategy;
-import com.amaysim.pricing.PricingStrategy;
-import com.amaysim.pricing.PromoCodePricingStrategy;
-import com.amaysim.util.Constants;
-import com.amaysim.util.PromoCodes;
+import com.amaysim.cart.exception.InvalidPromoCodeException;
+import com.amaysim.cart.pricing.BundleFreePricingStrategy;
+import com.amaysim.cart.pricing.BundlePricingStrategy;
+import com.amaysim.cart.pricing.BuyXGetYPricingStrategy;
+import com.amaysim.cart.pricing.NormalPricingStrategy;
+import com.amaysim.cart.pricing.PricingStrategy;
+import com.amaysim.cart.pricing.PromoCodePricingStrategy;
+import com.amaysim.cart.util.Constants;
+import com.amaysim.cart.util.PromoCodes;
 
 public class ShoppingCartTest {
 
@@ -60,6 +60,7 @@ public class ShoppingCartTest {
 		rules.put(Constants.PROMO_CODE_PRICING, promoCode);
 		
 		//When
+		
 		cart = new ShoppingCart(rules);
 		cart.add(small);
 		cart.add(small);
@@ -182,6 +183,21 @@ public class ShoppingCartTest {
 	}
 	
 	@Test
+	public void shouldTestInvalidPromoCodePercentage() {
+		//Expect
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Percent must be between 0 to 100");
+		
+		//Given
+		PricingStrategy promoCode = new PromoCodePricingStrategy(101);
+		rules.put(Constants.PROMO_CODE_PRICING, promoCode);
+		
+		//When
+		//cart = new ShoppingCart(rules);
+		//cart.add(oneGb, "I<3AMAYSIM");
+	}
+	
+	@Test
 	public void shouldTestAllPromo() {
 		//Given
 		PricingStrategy normal = new NormalPricingStrategy();
@@ -238,4 +254,17 @@ public class ShoppingCartTest {
 		cart.add(small, "I<3PHILIPPINES");
 	}
 	
+	@Test
+	public void shouldReturnZeroWhenNoProductIsAdded() {
+		//Given
+		PricingStrategy normal = new NormalPricingStrategy();
+		rules.put(Constants.NORMAL_PRICING, normal);
+		
+		//When
+		cart = new ShoppingCart(rules);
+		
+		//Then
+		assertEquals(0.0, cart.total(), 0.00D);
+	}
+		
 }

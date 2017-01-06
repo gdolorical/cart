@@ -1,4 +1,4 @@
-package com.amaysim.pricing;
+package com.amaysim.cart.pricing;
 
 /**
  * A marker class for normal/no discount pricing of <code>Product</code>.

@@ -1,4 +1,4 @@
-package com.amaysim.core;
+package com.amaysim.cart.core;
 
 /**
  *  Product Model class for shopping cart 

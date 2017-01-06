@@ -1,13 +1,13 @@
-package com.amaysim.pricing;
+package com.amaysim.cart.pricing;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.amaysim.core.Product;
+import com.amaysim.cart.core.Product;
 
 /**
- * A promotion pricing strategy where a customer gets a free bundle <code>Product</code> 
- * for a specific <code>Product</code> added.
+ * A promotion pricing strategy where a customer gets a free bundle of {@link Product} 
+ * for a specific {@link Product} added.
  * 
  * e.g. Bundle in a free 1 GB Data-pack free-of-charge with every Unlimited 2GB sold
  * 

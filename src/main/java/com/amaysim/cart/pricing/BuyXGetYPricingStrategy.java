@@ -1,6 +1,6 @@
-package com.amaysim.pricing;
+package com.amaysim.cart.pricing;
 
-import com.amaysim.core.Product;
+import com.amaysim.cart.core.Product;
 
 /**
  * A promotion pricing strategy where a customer gets a free discount

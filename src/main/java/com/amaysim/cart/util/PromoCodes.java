@@ -1,4 +1,4 @@
-package com.amaysim.util;
+package com.amaysim.cart.util;
 
 /**
  * Constant Enumeration of Promo Codes

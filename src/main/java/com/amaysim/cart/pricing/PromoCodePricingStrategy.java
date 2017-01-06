@@ -1,6 +1,6 @@
-package com.amaysim.pricing;
+package com.amaysim.cart.pricing;
 
-import com.amaysim.core.Product;
+import com.amaysim.cart.core.Product;
 
 /**
  * A promotion pricing strategy where a customer gets discount to the total price
@@ -17,7 +17,7 @@ public class PromoCodePricingStrategy implements PricingStrategy {
 
 	public PromoCodePricingStrategy(int percent) { 
 		if (percent < 0 || percent > 100 ) {
-			throw new IllegalArgumentException("percent must be between 0 to 100");
+			throw new IllegalArgumentException("Percent must be between 0 to 100");
 		}
 		this.priceFactor = (100 - percent) / 100.0;
 	 }

@@ -1,4 +1,4 @@
-package com.amaysim.util;
+package com.amaysim.cart.util;
 
 /**
  * Contant String Literal

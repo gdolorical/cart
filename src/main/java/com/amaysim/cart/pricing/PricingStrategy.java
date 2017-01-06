@@ -1,9 +1,9 @@
-package com.amaysim.pricing;
+package com.amaysim.cart.pricing;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.amaysim.core.Product;
+import com.amaysim.cart.core.Product;
 
 /**
  * Strategy Interface for Product pricing 

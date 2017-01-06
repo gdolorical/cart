@@ -1,11 +1,12 @@
-package com.amaysim.core;
+package com.amaysim.cart.core;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.amaysim.exception.InvalidPromoCodeException;
-import com.amaysim.pricing.PricingStrategy;
-import com.amaysim.service.ShoppingCartServiceImpl;
+import com.amaysim.cart.exception.InvalidPromoCodeException;
+import com.amaysim.cart.pricing.PricingStrategy;
+import com.amaysim.cart.service.ShoppingCartService;
+import com.amaysim.cart.service.ShoppingCartServiceImpl;
 
 /**
  * Main Application Shopping Cart 
@@ -16,21 +17,31 @@ import com.amaysim.service.ShoppingCartServiceImpl;
 public class ShoppingCart {
 
 	private Map<Product, Integer> itemsAdded;
-	private Map<String, PricingStrategy> strategies;
+	private Map<String, PricingStrategy> pricingStrategies;
 	
-	private ShoppingCartServiceImpl cartService;
+	private static final ShoppingCartService cartService = ShoppingCartServiceImpl.getInstance();
 	
 	public ShoppingCart(Map<String, PricingStrategy> pricingStrategies) {
-		this.strategies = pricingStrategies;
+		this.pricingStrategies = pricingStrategies;
 		this.itemsAdded = new LinkedHashMap<>();
-		this.cartService = new ShoppingCartServiceImpl(pricingStrategies, getItems());
 	}
 	
+	/**
+	 * Adds {@link Product} to shopping cart
+	 * 
+	 * @param product
+	 */
 	public void add(Product product) {
 		 int previousQuantity = itemsAdded.containsKey(product) ? itemsAdded.get(product) : 0;
 		 itemsAdded.put(product, previousQuantity + 1);
 	}
 	
+	/**
+	 * Adds {@link Product} to shopping cart with Promo Code
+	 * 
+	 * @param product
+	 * @param promoCode
+	 */
 	public void add(Product product, String promoCode) {
 
 		Product promo = cartService.checkPromoCode(promoCode);
@@ -43,30 +54,24 @@ public class ShoppingCart {
 		}
 	}
 	
+	/**
+	 * Returns the total price based on the {@link Product} added and Pricing Promotion
+	 * 
+	 * @return double total 
+	 */
 	public double total() {
-		return Math.ceil(cartService.getTotal() * 100) / 100;
+		return Math.ceil(cartService.getTotal(itemsAdded, pricingStrategies) * 100) / 100;
 	}
 
+	/**
+	 * Returns the Expected Cart Items which includes either includes a free bundled {@link Product}
+	 * 
+	 * @return String
+	 */
 	public String items() {
-		return cartService.getCartItems();
+		return cartService.getCartItems(itemsAdded, pricingStrategies);
 	}
 	
-	public Map<Product, Integer> getItems() {
-		return itemsAdded;
-	}
-
-	public void setItems(Map<Product, Integer> items) {
-		this.itemsAdded = items;
-	}
-	
-	public Map<String, PricingStrategy> getStrategies() {
-		return strategies;
-	}
-
-	public void setStrategies(Map<String, PricingStrategy> strategies) {
-		this.strategies = strategies;
-	}
-
 	@Override
 	public String toString() {
 		

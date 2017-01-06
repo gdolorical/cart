@@ -1,6 +1,6 @@
-package com.amaysim.pricing;
+package com.amaysim.cart.pricing;
 
-import com.amaysim.core.Product;
+import com.amaysim.cart.core.Product;
 
 /**
  * A promotion pricing strategy where a customer gets a discount 
@@ -32,7 +32,7 @@ public class BundlePricingStrategy implements PricingStrategy {
 			if (quantity > bundleSize) {
 				total += quantity * discountedAmount;
 			} else {
-				total = total + quantity * product.getPrice(); 	 
+				total += quantity * product.getPrice(); 	 
 			}
 		}
 		return total;
